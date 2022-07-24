@@ -16,6 +16,7 @@ router.post("/", async (req, res) => {
     res.send({
       status: "SUCCESS",
       message: "user is register successfully",
+      data: result,
     });
   }
 });
@@ -68,9 +69,19 @@ router.get("/:id", async (req, res) => {
 router.put("/:id", async (req, res) => {
   try {
     const users_id = req.params.id;
-    const result = await users.findByIdAndUpdate(users_id, req.body, {
-      new: true,
-    });
+    const result = await users.findByIdAndUpdate(
+      users_id,
+      {
+        $set: {
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          number: req.body.number,
+        },
+      },
+      {
+        new: true,
+      }
+    );
     if (!result) {
       res.send({
         status: "FAILED",

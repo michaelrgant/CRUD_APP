@@ -1,11 +1,29 @@
 // export default connect(mapState, mapDispatch)(EditContacts);
 import React, { useEffect, useState } from "react";
 import phoneLogo from "../phoneLogo.svg";
+import ViewModal from "./ViewModal";
+import AddContactsModal from "./AddContactsModal";
+import EditContactsView from "./EditContactsViewModal";
+import { connect } from "react-redux";
+import {
+  getUsersDataThunk,
+  addUsersDataThunk,
+  deleteUsersDataThunk,
+  updateUsersDataThunk,
+} from "../store/affects/affects";
 import contactLogo from "../contactsLogo.svg";
 import { Button, Modal, ModalTitle } from "react-bootstrap";
 import axios from "axios";
 
 const EditContacts = (props) => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [number, setNumber] = useState("");
+  const [SearchedContactsName, setSearchedContactsName] = useState("");
+  const [Delete, setDelete] = useState(false);
+
+  //Id for update record and Delete
+  const [id, setId] = useState("");
   const [Data, setData] = useState([]);
   const [RowData, SetRowData] = useState([]);
   const [ViewShow, SetViewShow] = useState(false);
@@ -18,8 +36,11 @@ const EditContacts = (props) => {
 
   //For Editing Model
   const [ViewEdit, SetEditShow] = useState(false);
-  const handleEditShow = () => {
+  const handleEditShow = (contact) => {
     SetEditShow(true);
+    setFirstName(contact.firstName);
+    setLastName(contact.lastName);
+    setNumber(contact.number);
   };
   const handleEditClose = () => {
     SetEditShow(false);
@@ -35,22 +56,18 @@ const EditContacts = (props) => {
     SetPostShow(false);
   };
 
-  //Define here local state that store the form Data
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [number, setnumber] = useState("");
-  const [SearchedContactsName, setSearchedContactsName] = useState("");
-  const [Delete, setDelete] = useState(false);
-
-  //Id for update record and Delete
-  const [id, setId] = useState("");
-
   // Function for filtering contacts by last name
   const filteredContacts = (searchedContactsName) => {
     return function (contacts) {
-      return contacts.lastName
-        .toLowerCase()
-        .includes(searchedContactsName.toLowerCase());
+      return (
+        contacts.lastName
+          .toLowerCase()
+          .includes(searchedContactsName.toLowerCase()) ||
+        contacts.firstName
+          .toLowerCase()
+          .includes(searchedContactsName.toLowerCase()) 
+
+      );
     };
   };
 
@@ -59,94 +76,45 @@ const EditContacts = (props) => {
     setSearchedContactsName(event.target.value);
   };
 
-  //Here we will get all users data
-  const GetUsersData = () => {
-    const url = "api/users";
-    axios
-      .get(url)
-      .then((response) => {
-        const result = response.data;
-        const { status, message, data } = result;
-        if (status !== "SUCCESS") {
-          alert(message, status);
-        } else {
-          setData(data);
-          console.log(data);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
   const handleSubmit = () => {
-    const url = "api/users";
-    const Credentials = { firstName, lastName, number };
-    axios
-      .post(url, Credentials)
-      .then((response) => {
-        const result = response.data;
-        const { status, message, data } = result;
-        if (status !== "SUCCESS") {
-          alert(message, status);
-        } else {
-          alert(message);
-          //window.location.reload();
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const data = {
+      firstName,
+      lastName,
+      number,
+    };
+    props.addContacts(data);
+    setFirstName("");
+    setLastName("");
+    setNumber("");
+    handlePostClose();
   };
 
   const handleEdit = () => {
-    const url = `api/users/${id}`;
-    const Credentials = { firstName, lastName, number };
-    axios
-      .put(url, Credentials)
-      .then((response) => {
-        const result = response.data;
-        const { status, message } = result;
-        if (status !== "SUCCESS") {
-          alert(message, status);
-        } else {
-          alert(message);
-         // window.location.reload();
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const data = {
+      firstName,
+      lastName,
+      number,
+      _id: id,
+    };
+
+    props.updateContacts(data);
+
+    setFirstName("");
+    setLastName("");
+    setNumber("");
+    handleEditClose();
   };
 
-  
   //handle Delete Function
   const handleDelete = () => {
-    const url = `api/users/${id}`;
-    axios
-      .delete(url)
-      .then((response) => {
-        const result = response.data;
-        console.log(result);
-        const { status, message } = result;
-        if (status !== "SUCCESS") {
-          alert(message, status);
-        } else {
-          console.log(status);
-          alert(message);
-          window.location.reload();
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    props.deleteContact(id);
+    handleViewClose();
   };
 
-  //call this function in useEffect
-  console.log(ViewShow, RowData);
-  console.log(props);
   useEffect(() => {
-    GetUsersData();
+    props.getContacts();
   }, []);
+  const data = props.contacts;
   return (
     <div>
       <div className="row">
@@ -196,233 +164,102 @@ const EditContacts = (props) => {
               </tr>
             </thead>
             <tbody>
-              {Data.filter(filteredContacts(SearchedContactsName)).map(
-                (contact) => (
-                  <tr key={contact._id}>
-                    <td>{contact.firstName}</td>
-                    <td>{contact.lastName}</td>
-                    <td>{contact.number}</td>
-                    <td style={{ minWidth: 190 }}>
-                      <Button
-                        size="sm"
-                        variant="primary"
-                        onClick={() => {
-                          handleViewShow(SetRowData(contact));
-                        }}
-                      >
-                        View
-                      </Button>
-                      |
-                      <Button
-                        size="sm"
-                        variant="warning"
-                        onClick={() => {
-                          handleEditShow(
-                            SetRowData(contact),
-                            setId(contact._id)
-                          );
-                        }}
-                      >
-                        Edit
-                      </Button>
-                      |
-                      <Button
-                        size="sm"
-                        variant="danger"
-                        onClick={() => {
-                          handleViewShow(
-                            SetRowData(contact),
-                            setId(contact._id),
-                            setDelete(true)
-                          );
-                        }}
-                      >
-                        Delete
-                      </Button>
-                      |
-                    </td>
-                  </tr>
-                )
-              )}
+              {data &&
+                data
+                  .filter(filteredContacts(SearchedContactsName))
+                  .map((contact) => (
+                    <tr key={contact._id}>
+                      <td>{contact.firstName}</td>
+                      <td>{contact.lastName}</td>
+                      <td>{contact.number}</td>
+                      <td style={{ minWidth: 190 }}>
+                        <Button
+                          size="sm"
+                          variant="primary"
+                          onClick={() => {
+                            handleViewShow();
+                            SetRowData(contact);
+                          }}
+                        >
+                          View
+                        </Button>
+                        |
+                        <Button
+                          size="sm"
+                          variant="warning"
+                          onClick={() => {
+                            handleEditShow(contact);
+                            SetRowData(contact);
+                            setId(contact._id);
+                          }}
+                        >
+                          Edit
+                        </Button>
+                        |
+                        <Button
+                          size="sm"
+                          variant="danger"
+                          onClick={() => {
+                            handleViewShow();
+                            SetViewShow(true);
+                            SetRowData(contact);
+                            setId(contact._id);
+                            setDelete(true);
+                          }}
+                        >
+                          Delete
+                        </Button>
+                        |
+                      </td>
+                    </tr>
+                  ))}
             </tbody>
           </table>
         </div>
       </div>
-
       {/* View Modal */}
-      <div className="model-box-view">
-        <Modal
-          show={ViewShow}
-          onHide={handleViewClose}
-          backdrop="static"
-          keyboard={false}
-        >
-          <Modal.Header closeButton>
-            <Modal.Title>View Contacts Data</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <div>
-              <div className="form-group">
-                <input
-                  type="text"
-                  className="form-control"
-                  value={RowData.firstName}
-                  readOnly
-                />
-              </div>
-              <div className="form-group mt-3">
-                <input
-                  type="text"
-                  className="form-control"
-                  value={RowData.lastName}
-                  readOnly
-                />
-              </div>
-              <div className="form-group mt-3">
-                <input
-                  type="text"
-                  className="form-control"
-                  value={RowData.number}
-                  readOnly
-                />
-              </div>
-
-              {Delete && (
-                <Button
-                  type="submit"
-                  className="btn btn-danger mt-4"
-                  onClick={handleDelete}
-                >
-                  Delete Contacts
-                </Button>
-              )}
-            </div>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleViewClose}>
-              Close
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </div>
-
+      <ViewModal
+        ViewShow={ViewShow}
+        handleViewClose={handleViewClose}
+        RowData={RowData}
+        Delete={Delete}
+        handleDelete={handleDelete}
+      />
       {/* Modal for submiting data to database */}
-      <div className="model-box-view">
-        <Modal
-          show={ViewPost}
-          onHide={handlePostClose}
-          backdrop="static"
-          keyboard={false}
-        >
-          <Modal.Header closeButton>
-            <Modal.Title>Add new Contacts</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <div>
-              <div className="form-group">
-                <input
-                  type="text"
-                  className="form-control"
-                  onChange={(e) => setFirstName(e.target.value)}
-                  placeholder="Please enter First Name"
-                />
-              </div>
-              <div className="form-group mt-3">
-                <input
-                  type="email"
-                  className="form-control"
-                  onChange={(e) => setLastName(e.target.value)}
-                  placeholder="Please Last Name"
-                />
-              </div>
-              <div className="form-group mt-3">
-                <input
-                  type="text"
-                  className="form-control"
-                  onChange={(e) => setnumber(e.target.value)}
-                  placeholder="Please enter Number"
-                />
-              </div>
-
-              <Button
-                type="submit"
-                className="btn btn-success mt-4"
-                onClick={handleSubmit}
-              >
-                Add Contacts
-              </Button>
-            </div>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handlePostClose}>
-              Close
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </div>
-
+      <AddContactsModal
+        ViewPost={ViewPost}
+        handlePostClose={handlePostClose}
+        setFirstName={setFirstName}
+        setLastName={setLastName}
+        setNumber={setNumber}
+        handleSubmit={handleSubmit}
+      />
       {/* Modal for Editing users records */}
-      <div className="model-box-view">
-        <Modal
-          show={ViewEdit}
-          onHide={handleEditClose}
-          backdrop="static"
-          keyboard={false}
-        >
-          <Modal.Header closeButton>
-            <Modal.Title>Edit Contacts</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <div>
-              <div className="form-group">
-                <label>firstName</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  onChange={(e) => setFirstName(e.target.value)}
-                  placeholder="Please enter Name"
-                  defaultValue={RowData.firstName}
-                />
-              </div>
-              <div className="form-group mt-3">
-                <label>lastName</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  onChange={(e) => setLastName(e.target.value)}
-                  placeholder="Please enter email"
-                  defaultValue={RowData.lastName}
-                />
-              </div>
-              <div className="form-group mt-3">
-                <label>Number</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  onChange={(e) => setnumber(e.target.value)}
-                  placeholder="Please enter Number"
-                  defaultValue={RowData.number}
-                />
-              </div>
-
-              <Button
-                type="submit"
-                className="btn btn-warning mt-4"
-                onClick={handleEdit}
-              >
-                Edit Contacts
-              </Button>
-            </div>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleEditClose}>
-              Close
-            </Button>
-          </Modal.Footer>
-        </Modal>
-      </div>
+      <EditContactsView
+        ViewEdit={ViewEdit}
+        handleEditClose={handleEditClose}
+        setFirstName={setFirstName}
+        RowData={RowData}
+        setLastName={setFirstName}
+        setNumber={setNumber}
+        handleEdit={handleEdit}
+      />
     </div>
   );
 };
 
-export default EditContacts;
+const mapStateToProps = (state) => {
+  return {
+    contacts: state.contacts,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    deleteContact: (id) => dispatch(deleteUsersDataThunk(id)),
+    getContacts: () => dispatch(getUsersDataThunk()),
+    addContacts: (data) => dispatch(addUsersDataThunk(data)),
+    updateContacts: (data) => dispatch(updateUsersDataThunk(data)),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(EditContacts);
