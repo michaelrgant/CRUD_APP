@@ -68,7 +68,9 @@ router.get("/:id", async (req, res) => {
 router.put("/:id", async (req, res) => {
   try {
     const users_id = req.params.id;
-    const result = await users.findByIdAndUpdate(users_id, req.body,{ new: true });
+    const result = await users.findByIdAndUpdate(users_id, req.body, {
+      new: true,
+    });
     if (!result) {
       res.send({
         status: "FAILED",
@@ -78,6 +80,7 @@ router.put("/:id", async (req, res) => {
       res.send({
         status: "SUCCESS",
         message: "Record is updated successfully",
+        data: result,
       });
     }
   } catch (error) {
@@ -88,6 +91,7 @@ router.put("/:id", async (req, res) => {
 // DELETE USERS ROUTE
 router.delete("/:id", async (req, res) => {
   try {
+    console.log("made it here");
     const users_id = req.params.id;
     const result = await users.findByIdAndDelete(users_id);
     if (!result) {
@@ -99,6 +103,7 @@ router.delete("/:id", async (req, res) => {
       res.send({
         status: "SUCCESS",
         message: "Record is Deleted successfully",
+        data: result,
       });
     }
   } catch (error) {
