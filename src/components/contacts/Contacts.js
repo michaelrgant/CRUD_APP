@@ -1,21 +1,21 @@
-// export default connect(mapState, mapDispatch)(EditContacts);
+
 import React, { useEffect, useState } from "react";
-import phoneLogo from "../phoneLogo.svg";
-import ContactTable from "./contactTable/ContactTable";
-import ViewModal from "./Modals/ViewContactsModal";
-import AddContactsViewModal from "./Modals/AddContactsViewModal";
-import EditContactsViewModal from "./Modals/EditContactsViewModal";
-import HeaderCard from "./header/HeaderCard";
+import phoneLogo from "../../phoneLogo.svg";
+import ContactTable from "../contactTable/ContactTable"
+import ViewModal from "../Modals/ViewContactsModal";
+import AddContactsViewModal from "../Modals/AddContactsViewModal";
+import EditContactsViewModal from "../Modals/EditContactsViewModal";
+import HeaderCard from "../header/HeaderCard";
 import { connect } from "react-redux";
 import {
   getUsersDataThunk,
   addUsersDataThunk,
   deleteUsersDataThunk,
   updateUsersDataThunk,
-} from "../store/affects/affects";
-import contactLogo from "../contactsLogo.svg";
+} from "../../store/affects/affects";
+import contactLogo from "../../contactsLogo.svg";
 
-const EditContacts = (props) => {
+const Contacts = (props) => {
   const [viewPost, setPostShow] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -180,4 +180,4 @@ const mapDispatchToProps = (dispatch) => {
     updateContacts: (data) => dispatch(updateUsersDataThunk(data)),
   };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(EditContacts);
+export default connect(mapStateToProps, mapDispatchToProps)(Contacts);
