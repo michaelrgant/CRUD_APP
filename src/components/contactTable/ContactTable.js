@@ -1,4 +1,4 @@
-import ContactsCard from "./ContactsCard";
+import ContactCard from "../contactCard/ContactCard";
 
 export default function ContactTable({
   searchedContactsName,
@@ -29,7 +29,7 @@ export default function ContactTable({
               data
                 .filter(filteredContacts(searchedContactsName))
                 .map((contact) => (
-                  <ContactsCard
+                  <ContactCard
                     key={contact._id}
                     contact={contact}
                     handleViewShow={handleViewShow}

@@ -8,13 +8,14 @@ export default function AddContactsViewModal(props) {
     setNumber,
     handleSubmit,
     handlePostClose,
+    viewPost,
   } = props;
   return (
     <div>
       <div className="model-box-view">
         <Modal
-          show={props.ViewPost}
-          onHide={props.handlePostClose}
+          show={viewPost}
+          onHide={handlePostClose}
           backdrop="static"
           keyboard={false}
         >

@@ -1,8 +1,7 @@
 // export default connect(mapState, mapDispatch)(EditContacts);
 import React, { useEffect, useState } from "react";
 import phoneLogo from "../phoneLogo.svg";
-import ContactTable from "./ContactTable";
-import ContactsCard from "./ContactsCard";
+import ContactTable from "./contactTable/ContactTable";
 import ViewModal from "./Modals/ViewContactsModal";
 import AddContactsViewModal from "./Modals/AddContactsViewModal";
 import EditContactsViewModal from "./Modals/EditContactsViewModal";
@@ -16,8 +15,8 @@ import {
 } from "../store/affects/affects";
 import contactLogo from "../contactsLogo.svg";
 
-
 const EditContacts = (props) => {
+  const [viewPost, setPostShow] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [number, setNumber] = useState("");
@@ -48,7 +47,6 @@ const EditContacts = (props) => {
   };
 
   //For Adding New Data Model
-  const [viewPost, setPostShow] = useState(false);
   const handlePostShow = () => {
     setPostShow(true);
   };
