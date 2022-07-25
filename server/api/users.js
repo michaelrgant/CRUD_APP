@@ -5,18 +5,23 @@ const router = express.Router();
 
 // POST USERS ROUTE
 router.post("/", async (req, res) => {
-  const data = new users(req.body);
-  const result = await data.save();
-  if (!result) {
-    res.send({
-      status: "FAILED",
-      message: "user is not register successfully",
-    });
-  } else {
-    res.send({
-      status: "SUCCESS",
-      message: "user is register successfully",
-    });
+  try {
+    const data = new users(req.body);
+    const result = await data.save();
+    if (!result) {
+      res.send({
+        status: "FAILED",
+        message: "user is not register successfully",
+      });
+    } else {
+      res.send({
+        status: "SUCCESS",
+        message: "user is register successfully",
+        data: result,
+      });
+    }
+  } catch (err) {
+    console.log("request failed", err);
   }
 });
 
@@ -37,7 +42,7 @@ router.get("/", async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error);
+    console.log("request failed", error);
   }
 });
 
@@ -60,7 +65,7 @@ router.get("/:id", async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error);
+    console.log("request failed", error);
   }
 });
 
@@ -68,7 +73,19 @@ router.get("/:id", async (req, res) => {
 router.put("/:id", async (req, res) => {
   try {
     const users_id = req.params.id;
-    const result = await users.findByIdAndUpdate(users_id, req.body,{ new: true });
+    const result = await users.findByIdAndUpdate(
+      users_id,
+      {
+        $set: {
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          number: req.body.number,
+        },
+      },
+      {
+        new: true,
+      }
+    );
     if (!result) {
       res.send({
         status: "FAILED",
@@ -78,16 +95,18 @@ router.put("/:id", async (req, res) => {
       res.send({
         status: "SUCCESS",
         message: "Record is updated successfully",
+        data: result,
       });
     }
   } catch (error) {
-    console.log(error);
+    console.log("request failed", error);
   }
 });
 
 // DELETE USERS ROUTE
 router.delete("/:id", async (req, res) => {
   try {
+    console.log("made it here");
     const users_id = req.params.id;
     const result = await users.findByIdAndDelete(users_id);
     if (!result) {
@@ -99,10 +118,11 @@ router.delete("/:id", async (req, res) => {
       res.send({
         status: "SUCCESS",
         message: "Record is Deleted successfully",
+        data: result,
       });
     }
   } catch (error) {
-    console.log(error);
+    console.log("request failed", error);
   }
 });
 

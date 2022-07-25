@@ -1,14 +1,16 @@
-import store from "../src/store";
+import store from "../../../src/store";
 import { render, screen } from "@testing-library/react";
 import { Provider } from "react-redux";
-import App from "../src/components/App";
 
-describe("App", () => {
+import Contacts from "./Contacts";
+
+
+describe("Contacts", () => {
   let component;
   beforeEach(() => {
-    component = render(
+   component = render(
       <Provider store={store}>
-        <App />
+        <Contacts />
       </Provider>
     );
   });
@@ -19,5 +21,3 @@ describe("App", () => {
     expect(component).toBeTruthy();
   });
 });
-
-

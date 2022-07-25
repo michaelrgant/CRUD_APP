@@ -7,8 +7,36 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 In the project directory, you can run:
 
 ### `npm start`
-
+-Start both the server and the react app
+-Make sure to NPM Install and killall node before
 Runs the app in the development mode.\
+
+
+
+
+
+                  INSTRUCTIONS FOR STARTING CRUD_APP
+|-------------------------------------------------------------------------------
+|  - ### `npm start` start both the server and the react app                   |
+|  - Make sure to  ### `npm install` before starting                           |
+|  -I use port 8080 for the back end, and the front runs on 3000. Make sure to |
+|      ### `killall node`  so those ports are clear                            |
+|  - Use ### `npm test` to start the test                                      |
+|                                                                              |
+|                                                                              |
+|______________________________________________________________________________|
+
+                            /|\
+                           / | \
+                          /  |  \
+                         /   |   \
+                             |
+                             |
+                             |
+
+
+
+
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 The page will reload when you make changes.\
