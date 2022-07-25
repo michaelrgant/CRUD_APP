@@ -42,7 +42,7 @@ router.get("/", async (req, res) => {
       });
     }
   } catch (error) {
-    console.Console.log("request failed", error);
+    console.log("request failed", error);
   }
 });
 
@@ -65,7 +65,7 @@ router.get("/:id", async (req, res) => {
       });
     }
   } catch (error) {
-    console.Console.log("request failed", error);
+    console.log("request failed", error);
   }
 });
 
@@ -99,7 +99,7 @@ router.put("/:id", async (req, res) => {
       });
     }
   } catch (error) {
-    console.Console.log("request failed", error);
+    console.log("request failed", error);
   }
 });
 
@@ -122,7 +122,7 @@ router.delete("/:id", async (req, res) => {
       });
     }
   } catch (error) {
-    console.Console.log("request failed", error);
+    console.log("request failed", error);
   }
 });
 
