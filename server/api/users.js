@@ -5,19 +5,23 @@ const router = express.Router();
 
 // POST USERS ROUTE
 router.post("/", async (req, res) => {
-  const data = new users(req.body);
-  const result = await data.save();
-  if (!result) {
-    res.send({
-      status: "FAILED",
-      message: "user is not register successfully",
-    });
-  } else {
-    res.send({
-      status: "SUCCESS",
-      message: "user is register successfully",
-      data: result,
-    });
+  try {
+    const data = new users(req.body);
+    const result = await data.save();
+    if (!result) {
+      res.send({
+        status: "FAILED",
+        message: "user is not register successfully",
+      });
+    } else {
+      res.send({
+        status: "SUCCESS",
+        message: "user is register successfully",
+        data: result,
+      });
+    }
+  } catch (err) {
+    console.log("request failed", err);
   }
 });
 
@@ -38,7 +42,7 @@ router.get("/", async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error);
+    console.Console.log("request failed", error);
   }
 });
 
@@ -61,7 +65,7 @@ router.get("/:id", async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error);
+    console.Console.log("request failed", error);
   }
 });
 
@@ -95,7 +99,7 @@ router.put("/:id", async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error);
+    console.Console.log("request failed", error);
   }
 });
 
@@ -118,7 +122,7 @@ router.delete("/:id", async (req, res) => {
       });
     }
   } catch (error) {
-    console.log(error);
+    console.Console.log("request failed", error);
   }
 });
 

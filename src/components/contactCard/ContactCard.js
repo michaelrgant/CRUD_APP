@@ -1,5 +1,6 @@
 import React from "react";
 import { Button } from "react-bootstrap";
+import { Fragment } from "react";
 
 export default function ContactsCard(props) {
   const {
@@ -12,7 +13,7 @@ export default function ContactsCard(props) {
     setViewShow,
   } = props;
   return (
-    <>
+
       <tr>
         <td>{contact.firstName}</td>
         <td>{contact.lastName}</td>
@@ -57,6 +58,5 @@ export default function ContactsCard(props) {
           |
         </td>
       </tr>
-    </>
   );
 }

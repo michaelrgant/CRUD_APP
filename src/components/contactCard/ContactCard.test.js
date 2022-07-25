@@ -1,7 +1,7 @@
 import store from "../../store";
 import { render, screen } from "@testing-library/react";
 import { Provider } from "react-redux";
-import ContactsCard from "./ContactsCard";
+import ContactsCard from "./ContactCard";
 
 describe("ContactsCard", () => {
   let component;
@@ -46,14 +46,16 @@ describe("ContactsCard", () => {
   it("renders the contact's last name", () => {
     expect(screen.getByText("Doe")).toBeTruthy();
   });
-  it("renders the contact's number", () => { expect(screen.getByText("1234567890")).toBeTruthy(); });
+  it("renders the contact's number", () => {
+    expect(screen.getByText("1234567890")).toBeTruthy();
+  });
   it("renders the view button", () => {
     expect(screen.getByText("View")).toBeTruthy();
-  })
+  });
   it("renders the edit button", () => {
     expect(screen.getByText("Edit")).toBeTruthy();
-  })
+  });
   it("renders the delete button", () => {
     expect(screen.getByText("Delete")).toBeTruthy();
-  })
+  });
 });

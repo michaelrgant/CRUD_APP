@@ -10,8 +10,6 @@ const usersData = (state = [], action) => {
     case ADD_USER_DATA:
       return [...state, action.data];
     case UPDATE_USER_DATA:
-      console.log("this is update data", action.data);
-      console.log("this is update state", state);
       return state.map((user) => {
         if (user._id === action.data._id) {
           return { ...user, ...action.data };
