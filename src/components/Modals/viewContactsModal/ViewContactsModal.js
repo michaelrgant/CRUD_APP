@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Modal, ModalTitle } from "react-bootstrap";
 
 export default function ViewContactsModal(props) {
-  const {rowData, handleViewClose, handleViewShow, viewShow,handleDelete} = props;
+  const {rowData, handleViewClose, handleViewShow, viewShow,handleDelete, Delete} = props;
   return (
     <div className="model-box-view">
       <Modal
@@ -41,7 +41,7 @@ export default function ViewContactsModal(props) {
               />
             </div>
 
-            {props.Delete && (
+            {Delete && (
               <Button
                 type="submit"
                 className="btn btn-danger mt-4"

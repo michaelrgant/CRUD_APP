@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import phoneLogo from "../../phoneLogo.svg";
 import ContactTable from "../contactTable/ContactTable";
-import ViewModal from "../Modals/ViewContactsModal";
+import ViewModal from "../Modals/viewContactsModal/ViewContactsModal";
 import AddContactsViewModal from "../Modals/addContactsViewModal/AddContactsViewModal";
-import EditContactsViewModal from "../Modals/EditContactsViewModal";
+import EditContactsViewModal from "../Modals/editcontactsViewModal/EditContactsViewModal";
 import HeaderCard from "../header/HeaderCard";
 import { connect } from "react-redux";
 import {
