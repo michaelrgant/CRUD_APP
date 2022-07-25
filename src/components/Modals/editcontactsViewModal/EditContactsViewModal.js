@@ -30,7 +30,7 @@ export default function EditContactsViewModal(props) {
                   type="text"
                   className="form-control"
                   onChange={(e) => setFirstName(e.target.value)}
-                  placeholder="Please enter Name"
+                  placeholder="Please enter First Name"
                   defaultValue={rowData.firstName}
                 />
               </div>
@@ -40,7 +40,7 @@ export default function EditContactsViewModal(props) {
                   type="text"
                   className="form-control"
                   onChange={(e) => setLastName(e.target.value)}
-                  placeholder="Please enter email"
+                  placeholder="Please enter Last Name"
                   defaultValue={rowData.lastName}
                 />
               </div>
