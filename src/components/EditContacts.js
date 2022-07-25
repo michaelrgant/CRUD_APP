@@ -6,7 +6,7 @@ import ContactsCard from "./ContactsCard";
 import ViewModal from "./Modals/ViewContactsModal";
 import AddContactsViewModal from "./Modals/AddContactsViewModal";
 import EditContactsViewModal from "./Modals/EditContactsViewModal";
-import HeaderCard from "./HeaderCard";
+import HeaderCard from "./header/HeaderCard";
 import { connect } from "react-redux";
 import {
   getUsersDataThunk,
@@ -15,8 +15,7 @@ import {
   updateUsersDataThunk,
 } from "../store/affects/affects";
 import contactLogo from "../contactsLogo.svg";
-import { Button, Modal, ModalTitle } from "react-bootstrap";
-import axios from "axios";
+
 
 const EditContacts = (props) => {
   const [firstName, setFirstName] = useState("");
@@ -27,7 +26,6 @@ const EditContacts = (props) => {
 
   //Id for update record and Delete
   const [id, setId] = useState("");
-  const [Data, setData] = useState([]);
   const [rowData, setRowData] = useState([]);
   const [viewShow, setViewShow] = useState(false);
   const handleViewShow = () => {
