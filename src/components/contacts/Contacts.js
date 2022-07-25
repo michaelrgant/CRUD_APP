@@ -1,9 +1,8 @@
-
 import React, { useEffect, useState } from "react";
 import phoneLogo from "../../phoneLogo.svg";
-import ContactTable from "../contactTable/ContactTable"
+import ContactTable from "../contactTable/ContactTable";
 import ViewModal from "../Modals/ViewContactsModal";
-import AddContactsViewModal from "../Modals/AddContactsViewModal";
+import AddContactsViewModal from "../Modals/addContactsViewModal/AddContactsViewModal";
 import EditContactsViewModal from "../Modals/EditContactsViewModal";
 import HeaderCard from "../header/HeaderCard";
 import { connect } from "react-redux";
@@ -122,18 +121,20 @@ const Contacts = (props) => {
         filteredHandler={filteredHandler}
         searchedContactsName={searchedContactsName}
       />
-      <ContactTable
-        searchedContactsName={searchedContactsName}
-        data={data}
-        setRowData={setRowData}
-        filteredContacts={filteredContacts}
-        handleViewShow={handleViewShow}
-        handleEditShow={handleEditShow}
-        handleDelete={handleDelete}
-        setId={setId}
-        setDelete={setDelete}
-        setViewShow={setViewShow}
-      />
+      <div className="row g-3 center justify-content-center">
+        <ContactTable
+          searchedContactsName={searchedContactsName}
+          data={data}
+          setRowData={setRowData}
+          filteredContacts={filteredContacts}
+          handleViewShow={handleViewShow}
+          handleEditShow={handleEditShow}
+          handleDelete={handleDelete}
+          setId={setId}
+          setDelete={setDelete}
+          setViewShow={setViewShow}
+        />
+      </div>
 
       {/* View Modal */}
       <ViewModal

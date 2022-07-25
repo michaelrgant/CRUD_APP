@@ -13,9 +13,9 @@ export default function ContactTable({
   setViewShow,
 }) {
   return (
-    <div className="row">
-      <div className="table-responsive">
-        <table className="table table-striped table-hover table-bordered">
+    <div className="row d-flex justify-content-center">
+      <div className="table-responsive ">
+        <table className="table table-striped table-hover table-bordered ">
           <thead>
             <tr>
               <th>First Name</th>

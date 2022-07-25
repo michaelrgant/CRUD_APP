@@ -37,7 +37,7 @@ export default function AddContactsViewModal(props) {
                   type="email"
                   className="form-control"
                   onChange={(e) => setLastName(e.target.value)}
-                  placeholder="Please Last Name"
+                  placeholder="Please enter Last Name"
                 />
               </div>
               <div className="form-group mt-3">

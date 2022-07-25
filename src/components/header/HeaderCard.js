@@ -5,7 +5,7 @@ export default function HeaderCard(props) {
   return (
     <div>
       {" "}
-      <div className="row">
+      <div className="row ">
         <div className="mt-5 mb-4">
           <h1 className=" d-flex justify-content-center">
             <img alt="phone logo" src={props.phoneLogo}></img>
