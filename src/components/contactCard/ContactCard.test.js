@@ -49,13 +49,6 @@ describe("ContactsCard", () => {
   it("renders the contact's number", () => {
     expect(screen.getByText("1234567890")).toBeTruthy();
   });
-  it("renders the view button", () => {
-    expect(screen.getByText("View")).toBeTruthy();
-  });
-  it("renders the edit button", () => {
-    expect(screen.getByText("Edit")).toBeTruthy();
-  });
-  it("renders the delete button", () => {
-    expect(screen.getByText("Delete")).toBeTruthy();
-  });
+
+  
 });

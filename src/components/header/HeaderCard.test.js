@@ -32,12 +32,14 @@ describe("HeaderCard", () => {
   });
   it("renders the phone logo", () => {
     expect(screen.getByAltText("phone logo")).toBeTruthy();
-  })
+  });
   it("renders the contacts logo", () => {
     expect(screen.getByAltText("contacts logo")).toBeTruthy();
-  })
+  });
   it("renders the add contacts button", () => {
     expect(screen.getByText("Add New Contacts")).toBeTruthy();
-  })
-  it("renders the search input", () => { expect(screen.getByPlaceholderText("Search for contacts by last name...")).toBeTruthy(); })
+  });
+  it("renders the search input", () => {
+    expect(screen.getByPlaceholderText("Search for contacts...")).toBeTruthy();
+  });
 });

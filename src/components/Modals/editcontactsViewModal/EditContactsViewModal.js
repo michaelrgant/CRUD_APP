@@ -1,5 +1,6 @@
 import React from "react";
-import { Button, Modal, ModalTitle } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
+
 export default function EditContactsViewModal(props) {
   const {
     viewEdit,

@@ -49,7 +49,4 @@ describe("ContactTable", () => {
   it("render table and displays Column Number", () => {
     expect(screen.getByText("Number")).toBeTruthy();
   });
-  it("render table and displays Menue", () => {
-    expect(screen.getByText("Menue")).toBeTruthy();
-  });
 });

@@ -63,7 +63,8 @@ const Contacts = (props) => {
           .includes(searchedContactsName.toLowerCase()) ||
         contacts.firstName
           .toLowerCase()
-          .includes(searchedContactsName.toLowerCase())
+          .includes(searchedContactsName.toLowerCase()) ||
+        contacts.number.toString().includes(searchedContactsName)
       );
     };
   };
@@ -121,7 +122,7 @@ const Contacts = (props) => {
         filteredHandler={filteredHandler}
         searchedContactsName={searchedContactsName}
       />
-      <div className="row g-3 center justify-content-center">
+
         <ContactTable
           searchedContactsName={searchedContactsName}
           data={data}
@@ -134,7 +135,7 @@ const Contacts = (props) => {
           setDelete={setDelete}
           setViewShow={setViewShow}
         />
-      </div>
+
 
       {/* View Modal */}
       <ViewModal

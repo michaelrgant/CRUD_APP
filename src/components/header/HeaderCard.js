@@ -33,7 +33,7 @@ export default function HeaderCard(props) {
                 type="search"
                 onChange={props.filteredHandler}
                 className="form-control mt-4 fa fa-search border-end-0 border rounded-pill"
-                placeholder="Search for contacts by last name..."
+                placeholder="Search for contacts..."
                 value={props.SearchedContactsName}
               />
             </div>

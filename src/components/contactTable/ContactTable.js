@@ -13,37 +13,36 @@ export default function ContactTable({
   setViewShow,
 }) {
   return (
-    <div className="row d-flex justify-content-center">
-      <div className="table-responsive ">
-        <table className="table table-striped table-hover table-bordered ">
-          <thead>
-            <tr>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Number</th>
-              <th>Menue</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data &&
-              data
-                .filter(filteredContacts(searchedContactsName))
-                .map((contact) => (
-                  <ContactCard
-                    key={contact._id}
-                    contact={contact}
-                    handleViewShow={handleViewShow}
-                    setRowData={setRowData}
-                    handleEditShow={handleEditShow}
-                    handleDelete={handleDelete}
-                    setId={setId}
-                    setDelete={setDelete}
-                    setViewShow={setViewShow}
-                  />
-                ))}
-          </tbody>
-        </table>
+      <div className="row">
+        <div className="table-responsive">
+          <table className="table table-striped table-hover table-bordered ">
+            <thead>
+              <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Number</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data &&
+                data
+                  .filter(filteredContacts(searchedContactsName))
+                  .map((contact) => (
+                    <ContactCard
+                      key={contact._id}
+                      contact={contact}
+                      handleViewShow={handleViewShow}
+                      setRowData={setRowData}
+                      handleEditShow={handleEditShow}
+                      handleDelete={handleDelete}
+                      setId={setId}
+                      setDelete={setDelete}
+                      setViewShow={setViewShow}
+                    />
+                  ))}
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
   );
 }
