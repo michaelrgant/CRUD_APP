@@ -1,12 +1,13 @@
 import React from "react";
 import { Button, Modal, ModalTitle } from "react-bootstrap";
 
-export default function ViewModal(props) {
+export default function ViewContactsModal(props) {
+  const {rowData, handleViewClose, handleViewShow, viewShow,handleDelete} = props;
   return (
     <div className="model-box-view">
       <Modal
-        show={props.ViewShow}
-        onHide={props.handleViewClose}
+        show={viewShow}
+        onHide={handleViewClose}
         backdrop="static"
         keyboard={false}
       >
@@ -19,7 +20,7 @@ export default function ViewModal(props) {
               <input
                 type="text"
                 className="form-control"
-                value={props.RowData.firstName}
+                value={rowData.firstName}
                 readOnly
               />
             </div>
@@ -27,7 +28,7 @@ export default function ViewModal(props) {
               <input
                 type="text"
                 className="form-control"
-                value={props.RowData.lastName}
+                value={rowData.lastName}
                 readOnly
               />
             </div>
@@ -35,7 +36,7 @@ export default function ViewModal(props) {
               <input
                 type="text"
                 className="form-control"
-                value={props.RowData.number}
+                value={rowData.number}
                 readOnly
               />
             </div>
@@ -44,7 +45,7 @@ export default function ViewModal(props) {
               <Button
                 type="submit"
                 className="btn btn-danger mt-4"
-                onClick={props.handleDelete}
+                onClick={handleDelete}
               >
                 Delete Contacts
               </Button>
@@ -52,7 +53,7 @@ export default function ViewModal(props) {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={props.handleViewClose}>
+          <Button variant="secondary" onClick={handleViewClose}>
             Close
           </Button>
         </Modal.Footer>

@@ -1,9 +1,12 @@
 // export default connect(mapState, mapDispatch)(EditContacts);
 import React, { useEffect, useState } from "react";
 import phoneLogo from "../phoneLogo.svg";
-import ViewModal from "./ViewModal";
-import AddContactsModal from "./AddContactsModal";
-import EditContactsView from "./EditContactsViewModal";
+import ContactTable from "./ContactTable";
+import ContactsCard from "./ContactsCard";
+import ViewModal from "./Modals/ViewContactsModal";
+import AddContactsViewModal from "./Modals/AddContactsViewModal";
+import EditContactsViewModal from "./Modals/EditContactsViewModal";
+import HeaderCard from "./HeaderCard";
 import { connect } from "react-redux";
 import {
   getUsersDataThunk,
@@ -19,41 +22,41 @@ const EditContacts = (props) => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [number, setNumber] = useState("");
-  const [SearchedContactsName, setSearchedContactsName] = useState("");
+  const [searchedContactsName, setSearchedContactsName] = useState("");
   const [Delete, setDelete] = useState(false);
 
   //Id for update record and Delete
   const [id, setId] = useState("");
   const [Data, setData] = useState([]);
-  const [RowData, SetRowData] = useState([]);
-  const [ViewShow, SetViewShow] = useState(false);
+  const [rowData, setRowData] = useState([]);
+  const [viewShow, setViewShow] = useState(false);
   const handleViewShow = () => {
-    SetViewShow(true);
+    setViewShow(true);
   };
   const handleViewClose = () => {
-    SetViewShow(false);
+    setViewShow(false);
   };
 
   //For Editing Model
-  const [ViewEdit, SetEditShow] = useState(false);
+  const [viewEdit, setEditShow] = useState(false);
   const handleEditShow = (contact) => {
-    SetEditShow(true);
+    setEditShow(true);
     setFirstName(contact.firstName);
     setLastName(contact.lastName);
     setNumber(contact.number);
   };
   const handleEditClose = () => {
-    SetEditShow(false);
+    setEditShow(false);
   };
 
   //For Adding New Data Model
-  const [ViewPost, SetPostShow] = useState(false);
+  const [viewPost, setPostShow] = useState(false);
   const handlePostShow = () => {
-    SetPostShow(true);
+    setPostShow(true);
   };
 
   const handlePostClose = () => {
-    SetPostShow(false);
+    setPostShow(false);
   };
 
   // Function for filtering contacts by last name
@@ -65,8 +68,7 @@ const EditContacts = (props) => {
           .includes(searchedContactsName.toLowerCase()) ||
         contacts.firstName
           .toLowerCase()
-          .includes(searchedContactsName.toLowerCase()) 
-
+          .includes(searchedContactsName.toLowerCase())
       );
     };
   };
@@ -117,117 +119,37 @@ const EditContacts = (props) => {
   const data = props.contacts;
   return (
     <div>
-      <div className="row">
-        <div className="mt-5 mb-4">
-          <h1 className=" d-flex justify-content-center">
-            <img alt="logo" src={phoneLogo}></img>
-            Phone Book App
-          </h1>
-          <div className="d-flex justify-content-around">
-            <h2>
-              {" "}
-              <img alt="logo" src={contactLogo}></img>Contacts
-            </h2>
-            <Button
-              variant="primary"
-              onClick={() => {
-                handlePostShow();
-              }}
-            >
-              <i className="fa fa-plu"></i>
-              Add New Contacts
-            </Button>
-          </div>
-          <form className="row g-6 center justify-content-center">
-            <i className="fa fa-search"></i>
-            <div className="col-7">
-              <input
-                type="search"
-                onChange={filteredHandler}
-                className="form-control mt-4 fa fa-search border-end-0 border rounded-pill"
-                placeholder="Search for contacts by last name..."
-                value={SearchedContactsName}
-              />
-            </div>
-          </form>
-        </div>
-      </div>
-      <div className="row">
-        <div className="table-responsive">
-          <table className="table table-striped table-hover table-bordered">
-            <thead>
-              <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Number</th>
-                <th>Menue</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data &&
-                data
-                  .filter(filteredContacts(SearchedContactsName))
-                  .map((contact) => (
-                    <tr key={contact._id}>
-                      <td>{contact.firstName}</td>
-                      <td>{contact.lastName}</td>
-                      <td>{contact.number}</td>
-                      <td style={{ minWidth: 190 }}>
-                        <Button
-                          size="sm"
-                          variant="primary"
-                          onClick={() => {
-                            handleViewShow();
-                            SetRowData(contact);
-                          }}
-                        >
-                          View
-                        </Button>
-                        |
-                        <Button
-                          size="sm"
-                          variant="warning"
-                          onClick={() => {
-                            handleEditShow(contact);
-                            SetRowData(contact);
-                            setId(contact._id);
-                          }}
-                        >
-                          Edit
-                        </Button>
-                        |
-                        <Button
-                          size="sm"
-                          variant="danger"
-                          onClick={() => {
-                            handleViewShow();
-                            SetViewShow(true);
-                            SetRowData(contact);
-                            setId(contact._id);
-                            setDelete(true);
-                          }}
-                        >
-                          Delete
-                        </Button>
-                        |
-                      </td>
-                    </tr>
-                  ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <HeaderCard
+        phoneLogo={phoneLogo}
+        contactLogo={contactLogo}
+        handlePostShow={handlePostShow}
+        filteredHandler={filteredHandler}
+        searchedContactsName={searchedContactsName}
+      />
+      <ContactTable
+        searchedContactsName={searchedContactsName}
+        data={data}
+        setRowData={setRowData}
+        filteredContacts={filteredContacts}
+        handleViewShow={handleViewShow}
+        handleEditShow={handleEditShow}
+        handleDelete={handleDelete}
+        setId={setId}
+        setDelete={setDelete}
+        setViewShow={setViewShow}
+      />
+
       {/* View Modal */}
       <ViewModal
-        ViewShow={ViewShow}
+        viewShow={viewShow}
         handleViewClose={handleViewClose}
-        RowData={RowData}
+        rowData={rowData}
         Delete={Delete}
         handleDelete={handleDelete}
       />
       {/* Modal for submiting data to database */}
-      <AddContactsModal
-        ViewPost={ViewPost}
+      <AddContactsViewModal
+        viewPost={viewPost}
         handlePostClose={handlePostClose}
         setFirstName={setFirstName}
         setLastName={setLastName}
@@ -235,11 +157,11 @@ const EditContacts = (props) => {
         handleSubmit={handleSubmit}
       />
       {/* Modal for Editing users records */}
-      <EditContactsView
-        ViewEdit={ViewEdit}
+      <EditContactsViewModal
+        viewEdit={viewEdit}
         handleEditClose={handleEditClose}
         setFirstName={setFirstName}
-        RowData={RowData}
+        rowData={rowData}
         setLastName={setFirstName}
         setNumber={setNumber}
         handleEdit={handleEdit}

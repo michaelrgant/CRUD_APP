@@ -1,12 +1,21 @@
 import React from "react";
 import { Button, Modal, ModalTitle } from "react-bootstrap";
-export default function EditContactsView(props) {
+export default function EditContactsViewModal(props) {
+  const {
+    viewEdit,
+    handleEditClose,
+    rowData,
+    setFirstName,
+    setLastName,
+    setNumber,
+    handleEdit,
+  } = props;
   return (
     <div>
       <div className="model-box-view">
         <Modal
-          show={props.ViewEdit}
-          onHide={props.handleEditClose}
+          show={viewEdit}
+          onHide={handleEditClose}
           backdrop="static"
           keyboard={false}
         >
@@ -20,9 +29,9 @@ export default function EditContactsView(props) {
                 <input
                   type="text"
                   className="form-control"
-                  onChange={(e) => props.setFirstName(e.target.value)}
+                  onChange={(e) => setFirstName(e.target.value)}
                   placeholder="Please enter Name"
-                  defaultValue={props.RowData.firstName}
+                  defaultValue={rowData.firstName}
                 />
               </div>
               <div className="form-group mt-3">
@@ -30,9 +39,9 @@ export default function EditContactsView(props) {
                 <input
                   type="text"
                   className="form-control"
-                  onChange={(e) => props.setLastName(e.target.value)}
+                  onChange={(e) => setLastName(e.target.value)}
                   placeholder="Please enter email"
-                  defaultValue={props.RowData.lastName}
+                  defaultValue={rowData.lastName}
                 />
               </div>
               <div className="form-group mt-3">
@@ -40,23 +49,23 @@ export default function EditContactsView(props) {
                 <input
                   type="text"
                   className="form-control"
-                  onChange={(e) => props.setNumber(e.target.value)}
+                  onChange={(e) => setNumber(e.target.value)}
                   placeholder="Please enter Number"
-                  defaultValue={props.RowData.number}
+                  defaultValue={rowData.number}
                 />
               </div>
 
               <Button
                 type="submit"
                 className="btn btn-warning mt-4"
-                onClick={props.handleEdit}
+                onClick={handleEdit}
               >
                 Edit Contacts
               </Button>
             </div>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={props.handleEditClose}>
+            <Button variant="secondary" onClick={handleEditClose}>
               Close
             </Button>
           </Modal.Footer>

@@ -1,7 +1,14 @@
 import React from "react";
 import { Button, Modal, ModalTitle } from "react-bootstrap";
 
-export default function AddContactsModal(props) {
+export default function AddContactsViewModal(props) {
+  const {
+    setFirstName,
+    setLastName,
+    setNumber,
+    handleSubmit,
+    handlePostClose,
+  } = props;
   return (
     <div>
       <div className="model-box-view">
@@ -20,7 +27,7 @@ export default function AddContactsModal(props) {
                 <input
                   type="text"
                   className="form-control"
-                  onChange={(e) => props.setFirstName(e.target.value)}
+                  onChange={(e) => setFirstName(e.target.value)}
                   placeholder="Please enter First Name"
                 />
               </div>
@@ -28,7 +35,7 @@ export default function AddContactsModal(props) {
                 <input
                   type="email"
                   className="form-control"
-                  onChange={(e) => props.setLastName(e.target.value)}
+                  onChange={(e) => setLastName(e.target.value)}
                   placeholder="Please Last Name"
                 />
               </div>
@@ -36,7 +43,7 @@ export default function AddContactsModal(props) {
                 <input
                   type="text"
                   className="form-control"
-                  onChange={(e) => props.setNumber(e.target.value)}
+                  onChange={(e) => setNumber(e.target.value)}
                   placeholder="Please enter Number"
                 />
               </div>
@@ -44,14 +51,14 @@ export default function AddContactsModal(props) {
               <Button
                 type="submit"
                 className="btn btn-success mt-4"
-                onClick={props.handleSubmit}
+                onClick={handleSubmit}
               >
                 Add Contacts
               </Button>
             </div>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={props.handlePostClose}>
+            <Button variant="secondary" onClick={handlePostClose}>
               Close
             </Button>
           </Modal.Footer>
