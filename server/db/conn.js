@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
-
+const database = process.env.DATABASE || "mongodb://localhost:27017/crud_app";
 mongoose
-  .connect("mongodb://localhost:27017/crud_app", { useNewUrlParser: true })
+  .connect(database, { useNewUrlParser: true })
   .then(() => {
     console.log("connection is setup sucessfully...");
   })
@@ -9,4 +9,3 @@ mongoose
     console.log("connection not setup");
     console.log("error");
   });
-
